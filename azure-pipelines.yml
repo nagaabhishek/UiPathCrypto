@@ -1,0 +1,14 @@
+#UiPathArtifact
+trigger:
+ - master
+stages:
+ - stage: Build
+   displayName: Create build artifact
+   jobs:
+     - job: BuildArtifact
+       pool: UiPathPool
+       steps:
+         - script: C:\Users\chepp\AppData\Local\Programs\UiPath\Studio\UiRobot.exe pack $(Build.SourcesDirectory)\project.json -o $(Build.ArtifactStagingDirectory)\ -v 1.0.$(Build.BuildNumber)
+           displayName: "Build the artifact"
+         - publish: $(Build.ArtifactStagingDirectory)
+           artifact: UiPathArtifact
